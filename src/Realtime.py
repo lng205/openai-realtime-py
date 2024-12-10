@@ -36,19 +36,19 @@ class Realtime:
 
     def send_audio_to_socket(self, mic_chunk):
         """ Callback function to send audio data to the socket. """
-        logging.info(f'🎤 Sending {len(mic_chunk)} bytes of audio data to socket.')
+        logging.debug(f'🎤 Sending {len(mic_chunk)} bytes of audio data to socket.')
         encoded_chunk = base64.b64encode(mic_chunk).decode('utf-8')
         self.socket.send({'type': 'input_audio_buffer.append', 'audio': encoded_chunk})
 
     def handle_message(self, message):
         """ Handle incoming WebSocket messages. """
         event_type = message.get('type')
-        logging.info(f'Received message type: {event_type}')
+        logging.debug(f'Received message type: {event_type}')
 
         if event_type == 'response.audio.delta':
             audio_content = base64.b64decode(message['delta'])
             self.audio_io.receive_audio(audio_content)
-            logging.info(f'Received {len(audio_content)} bytes of audio data.')
+            logging.debug(f'Received {len(audio_content)} bytes of audio data.')
 
         elif event_type == 'response.audio.done':
             logging.info('AI finished speaking.')
