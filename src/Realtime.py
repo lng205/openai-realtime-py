@@ -15,7 +15,7 @@ class Realtime:
         self.audio_thread = None  # Store thread references
         self.recv_thread = None
         self.session_config = session_config
-        self.tools = Tools()
+        self.tools = Tools(output_callback=self.send_function_call_output)
 
     def start(self):
         """ Start WebSocket and audio processing. """
@@ -64,7 +64,7 @@ class Realtime:
 
         elif event_type == 'response.function_call_arguments_done':
             logging.info(f"Function call: {message['function_name']}({message['arguments']}), Call ID: {message['call_id']}")
-            threading.Thread(target=self.tools.call, args=(message, self.send_function_call_output)).start()
+            threading.Thread(target=self.tools.call, args=(message)).start()
 
     def send_function_call_output(self, output, call_id):
         """ Send the output of a function call to the socket. """
@@ -76,6 +76,8 @@ class Realtime:
                 'output': output
             }
         })
+
+        # # Immediately request a response
         # self.socket.send({'type': 'response.create'})
 
     def stop(self):

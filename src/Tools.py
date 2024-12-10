@@ -20,14 +20,15 @@ tools_message = [
 
 
 class Tools:
-    def __init__(self):
+    def __init__(self, output_callback=None):
         self.mapping = {"get_weather": get_weather}
+        self.output_callback = output_callback
 
-    def call(self, message: dict, callback=None):
+    def call(self, message: dict):
         tool_name = message["name"]
         parameters = message.get("parameters", {})
         call_id = message["call_id"]
 
         output = self.mapping[tool_name](**parameters)
-        if callback:
-            callback(json.dump(output), call_id)
+        if self.output_callback:
+            self.output_callback(json.dump(output), call_id)
