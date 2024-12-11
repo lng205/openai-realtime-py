@@ -1,10 +1,9 @@
 import pyaudio
 import queue
 import time
-import logging
 import threading
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
+from log import logger as logging
 
 CHUNK_SIZE = 1024
 RATE = 24000

@@ -1,13 +1,11 @@
 import os
 import signal
 import time
-import logging
 from dotenv import load_dotenv
 
 from Realtime import Realtime
+from log import logger as logging
 from Tools import tools_message
-
-logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 
 # Load environment variables from a .env file
 load_dotenv()

@@ -1,12 +1,10 @@
 import base64
-import logging
 import threading
 
 from Socket import Socket
 from AudioIO import AudioIO
 from Tools import Tools
-
-logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
+from log import logger as logging
 
 class Realtime:
     def __init__(self, api_key, ws_url, session_config):

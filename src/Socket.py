@@ -1,11 +1,10 @@
 import threading
 import queue
 import json
-import logging
 import select
 from websocket import create_connection, WebSocketConnectionClosedException
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
+from log import logger as logging
 
 class Socket:
     def __init__(self, api_key, ws_url, on_msg=None):
